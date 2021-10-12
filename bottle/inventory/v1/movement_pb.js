@@ -77,7 +77,7 @@ proto.bottle.inventory.v1.Movement.toObject = function(includeInstance, msg) {
     part: (f = msg.getPart()) && bottle_inventory_v1_part_pb.Part.toObject(includeInstance, f),
     fromLocation: (f = msg.getFromLocation()) && bottle_inventory_v1_location_pb.Location.toObject(includeInstance, f),
     toLocation: (f = msg.getToLocation()) && bottle_inventory_v1_location_pb.Location.toObject(includeInstance, f),
-    createdAt: jspb.Message.getFieldWithDefault(msg, 5, "")
+    insertedAt: jspb.Message.getFieldWithDefault(msg, 5, "")
   };
 
   if (includeInstance) {
@@ -135,7 +135,7 @@ proto.bottle.inventory.v1.Movement.deserializeBinaryFromReader = function(msg, r
       break;
     case 5:
       var value = /** @type {string} */ (reader.readString());
-      msg.setCreatedAt(value);
+      msg.setInsertedAt(value);
       break;
     default:
       reader.skipField();
@@ -197,7 +197,7 @@ proto.bottle.inventory.v1.Movement.serializeBinaryToWriter = function(message, w
       bottle_inventory_v1_location_pb.Location.serializeBinaryToWriter
     );
   }
-  f = message.getCreatedAt();
+  f = message.getInsertedAt();
   if (f.length > 0) {
     writer.writeString(
       5,
@@ -337,10 +337,10 @@ proto.bottle.inventory.v1.Movement.prototype.hasToLocation = function() {
 
 
 /**
- * optional string created_at = 5;
+ * optional string inserted_at = 5;
  * @return {string}
  */
-proto.bottle.inventory.v1.Movement.prototype.getCreatedAt = function() {
+proto.bottle.inventory.v1.Movement.prototype.getInsertedAt = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 5, ""));
 };
 
@@ -349,7 +349,7 @@ proto.bottle.inventory.v1.Movement.prototype.getCreatedAt = function() {
  * @param {string} value
  * @return {!proto.bottle.inventory.v1.Movement} returns this
  */
-proto.bottle.inventory.v1.Movement.prototype.setCreatedAt = function(value) {
+proto.bottle.inventory.v1.Movement.prototype.setInsertedAt = function(value) {
   return jspb.Message.setProto3StringField(this, 5, value);
 };
 

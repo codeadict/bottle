@@ -11,10 +11,10 @@ export interface Movement {
   part: Part | undefined;
   fromLocation: Location | undefined;
   toLocation: Location | undefined;
-  createdAt: string;
+  insertedAt: string;
 }
 
-const baseMovement: object = { id: "", createdAt: "" };
+const baseMovement: object = { id: "", insertedAt: "" };
 
 export const Movement = {
   encode(message: Movement, writer: Writer = Writer.create()): Writer {
@@ -30,8 +30,8 @@ export const Movement = {
     if (message.toLocation !== undefined) {
       Location.encode(message.toLocation, writer.uint32(34).fork()).ldelim();
     }
-    if (message.createdAt !== "") {
-      writer.uint32(42).string(message.createdAt);
+    if (message.insertedAt !== "") {
+      writer.uint32(42).string(message.insertedAt);
     }
     return writer;
   },
@@ -56,7 +56,7 @@ export const Movement = {
           message.toLocation = Location.decode(reader, reader.uint32());
           break;
         case 5:
-          message.createdAt = reader.string();
+          message.insertedAt = reader.string();
           break;
         default:
           reader.skipType(tag & 7);
@@ -88,10 +88,10 @@ export const Movement = {
     } else {
       message.toLocation = undefined;
     }
-    if (object.createdAt !== undefined && object.createdAt !== null) {
-      message.createdAt = String(object.createdAt);
+    if (object.insertedAt !== undefined && object.insertedAt !== null) {
+      message.insertedAt = String(object.insertedAt);
     } else {
-      message.createdAt = "";
+      message.insertedAt = "";
     }
     return message;
   },
@@ -109,7 +109,7 @@ export const Movement = {
       (obj.toLocation = message.toLocation
         ? Location.toJSON(message.toLocation)
         : undefined);
-    message.createdAt !== undefined && (obj.createdAt = message.createdAt);
+    message.insertedAt !== undefined && (obj.insertedAt = message.insertedAt);
     return obj;
   },
 
@@ -135,10 +135,10 @@ export const Movement = {
     } else {
       message.toLocation = undefined;
     }
-    if (object.createdAt !== undefined && object.createdAt !== null) {
-      message.createdAt = object.createdAt;
+    if (object.insertedAt !== undefined && object.insertedAt !== null) {
+      message.insertedAt = object.insertedAt;
     } else {
-      message.createdAt = "";
+      message.insertedAt = "";
     }
     return message;
   },
