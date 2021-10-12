@@ -4,6 +4,7 @@ import * as Long from "long";
 import { Component } from "../../../bottle/inventory/v1/component";
 import { Sku } from "../../../bottle/inventory/v1/sku";
 import { Location } from "../../../bottle/inventory/v1/location";
+import { Movement } from "../../../bottle/inventory/v1/movement";
 
 export const protobufPackage = "bottle.inventory.v1";
 
@@ -81,6 +82,16 @@ export interface ListLocationsRequest {
 export interface ListLocationsResponse {
   requestId: string;
   location: Location | undefined;
+}
+
+export interface ListSkuMovementsRequest {
+  requestId: string;
+  sku: Sku | undefined;
+}
+
+export interface ListSkuMovementsResponse {
+  requestId: string;
+  movements: Movement[];
 }
 
 const baseListComponentAvailabilityRequest: object = { requestId: "" };
@@ -1533,6 +1544,185 @@ export const ListLocationsResponse = {
       message.location = Location.fromPartial(object.location);
     } else {
       message.location = undefined;
+    }
+    return message;
+  },
+};
+
+const baseListSkuMovementsRequest: object = { requestId: "" };
+
+export const ListSkuMovementsRequest = {
+  encode(
+    message: ListSkuMovementsRequest,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.requestId !== "") {
+      writer.uint32(10).string(message.requestId);
+    }
+    if (message.sku !== undefined) {
+      Sku.encode(message.sku, writer.uint32(18).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(input: Reader | Uint8Array, length?: number): ListSkuMovementsRequest {
+    const reader = input instanceof Reader ? input : new Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseListSkuMovementsRequest,
+    } as ListSkuMovementsRequest;
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.requestId = reader.string();
+          break;
+        case 2:
+          message.sku = Sku.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): ListSkuMovementsRequest {
+    const message = {
+      ...baseListSkuMovementsRequest,
+    } as ListSkuMovementsRequest;
+    if (object.requestId !== undefined && object.requestId !== null) {
+      message.requestId = String(object.requestId);
+    } else {
+      message.requestId = "";
+    }
+    if (object.sku !== undefined && object.sku !== null) {
+      message.sku = Sku.fromJSON(object.sku);
+    } else {
+      message.sku = undefined;
+    }
+    return message;
+  },
+
+  toJSON(message: ListSkuMovementsRequest): unknown {
+    const obj: any = {};
+    message.requestId !== undefined && (obj.requestId = message.requestId);
+    message.sku !== undefined &&
+      (obj.sku = message.sku ? Sku.toJSON(message.sku) : undefined);
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<ListSkuMovementsRequest>
+  ): ListSkuMovementsRequest {
+    const message = {
+      ...baseListSkuMovementsRequest,
+    } as ListSkuMovementsRequest;
+    if (object.requestId !== undefined && object.requestId !== null) {
+      message.requestId = object.requestId;
+    } else {
+      message.requestId = "";
+    }
+    if (object.sku !== undefined && object.sku !== null) {
+      message.sku = Sku.fromPartial(object.sku);
+    } else {
+      message.sku = undefined;
+    }
+    return message;
+  },
+};
+
+const baseListSkuMovementsResponse: object = { requestId: "" };
+
+export const ListSkuMovementsResponse = {
+  encode(
+    message: ListSkuMovementsResponse,
+    writer: Writer = Writer.create()
+  ): Writer {
+    if (message.requestId !== "") {
+      writer.uint32(10).string(message.requestId);
+    }
+    for (const v of message.movements) {
+      Movement.encode(v!, writer.uint32(18).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(
+    input: Reader | Uint8Array,
+    length?: number
+  ): ListSkuMovementsResponse {
+    const reader = input instanceof Reader ? input : new Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = {
+      ...baseListSkuMovementsResponse,
+    } as ListSkuMovementsResponse;
+    message.movements = [];
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.requestId = reader.string();
+          break;
+        case 2:
+          message.movements.push(Movement.decode(reader, reader.uint32()));
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): ListSkuMovementsResponse {
+    const message = {
+      ...baseListSkuMovementsResponse,
+    } as ListSkuMovementsResponse;
+    message.movements = [];
+    if (object.requestId !== undefined && object.requestId !== null) {
+      message.requestId = String(object.requestId);
+    } else {
+      message.requestId = "";
+    }
+    if (object.movements !== undefined && object.movements !== null) {
+      for (const e of object.movements) {
+        message.movements.push(Movement.fromJSON(e));
+      }
+    }
+    return message;
+  },
+
+  toJSON(message: ListSkuMovementsResponse): unknown {
+    const obj: any = {};
+    message.requestId !== undefined && (obj.requestId = message.requestId);
+    if (message.movements) {
+      obj.movements = message.movements.map((e) =>
+        e ? Movement.toJSON(e) : undefined
+      );
+    } else {
+      obj.movements = [];
+    }
+    return obj;
+  },
+
+  fromPartial(
+    object: DeepPartial<ListSkuMovementsResponse>
+  ): ListSkuMovementsResponse {
+    const message = {
+      ...baseListSkuMovementsResponse,
+    } as ListSkuMovementsResponse;
+    message.movements = [];
+    if (object.requestId !== undefined && object.requestId !== null) {
+      message.requestId = object.requestId;
+    } else {
+      message.requestId = "";
+    }
+    if (object.movements !== undefined && object.movements !== null) {
+      for (const e of object.movements) {
+        message.movements.push(Movement.fromPartial(e));
+      }
     }
     return message;
   },
