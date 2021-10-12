@@ -27,6 +27,12 @@ defmodule Bottle.Inventory.V1.Service do
   )
 
   rpc(
+    :ListSkuMovements,
+    Bottle.Inventory.V1.ListSkuMovementsRequest,
+    stream(Bottle.Inventory.V1.ListSkuMovementsResponse)
+  )
+
+  rpc(
     :ListLocations,
     Bottle.Inventory.V1.ListLocationsRequest,
     stream(Bottle.Inventory.V1.ListLocationsResponse)

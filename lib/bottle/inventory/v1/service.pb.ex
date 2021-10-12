@@ -220,3 +220,31 @@ defmodule Bottle.Inventory.V1.ListLocationsResponse do
   field(:request_id, 1, type: :string)
   field(:location, 2, type: Bottle.Inventory.V1.Location)
 end
+
+defmodule Bottle.Inventory.V1.ListSkuMovementsRequest do
+  @moduledoc false
+  use Protobuf, syntax: :proto3
+
+  @type t :: %__MODULE__{
+          request_id: String.t(),
+          sku: Bottle.Inventory.V1.Sku.t() | nil
+        }
+  defstruct [:request_id, :sku]
+
+  field(:request_id, 1, type: :string)
+  field(:sku, 2, type: Bottle.Inventory.V1.Sku)
+end
+
+defmodule Bottle.Inventory.V1.ListSkuMovementsResponse do
+  @moduledoc false
+  use Protobuf, syntax: :proto3
+
+  @type t :: %__MODULE__{
+          request_id: String.t(),
+          movements: [Bottle.Inventory.V1.Movement.t()]
+        }
+  defstruct [:request_id, :movements]
+
+  field(:request_id, 1, type: :string)
+  field(:movements, 2, repeated: true, type: Bottle.Inventory.V1.Movement)
+end
